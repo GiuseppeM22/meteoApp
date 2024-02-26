@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="search">
+    <input (keyup.enter)="searchCoordinates()" type="text" id="cityInput" [(ngModel)]="cityName" placeholder="inserisci città"/>
+    <button (click)="searchCoordinates()">Cerca</button>
+  </div>
+  <!-- *ngIf="coordinates" -->
+  <div>
+    <!-- *ngIf="weatherData" -->
+    <div *ngIf="weatherData" class="meteoResponse">
+        <h2>Meteo {{cityName | titlecase}}</h2>
+        <p>Temperatura: {{ weatherData.temperature_2m }} °C</p>
+        <p>Vento: {{ weatherData.wind_speed_10m }} km/h</p>
+  </div>
+</div>
+  

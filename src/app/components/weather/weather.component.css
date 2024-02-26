@@ -1,0 +1,50 @@
+.container{
+    padding: 50px;
+    border-radius: 30px;
+    background: rgb(2,61,233);
+    -webkit-box-shadow: 1px 2px 39px -4px #000000; 
+    box-shadow: 1px 2px 39px -4px #000000;
+    background: -moz-linear-gradient(180deg, rgba(2,61,233,1) 0%, rgba(67,109,228,1) 100%, rgba(77,95,147,1) 100%, rgba(85,105,165,1) 100%, rgba(89,111,175,1) 100%, rgba(77,90,127,1) 100%, rgba(140,140,140,0.21054359243697474) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(2,61,233,1) 0%, rgba(67,109,228,1) 100%, rgba(77,95,147,1) 100%, rgba(85,105,165,1) 100%, rgba(89,111,175,1) 100%, rgba(77,90,127,1) 100%, rgba(140,140,140,0.21054359243697474) 100%);
+    background: linear-gradient(180deg, rgba(2,61,233,1) 0%, rgba(67,109,228,1) 100%, rgba(77,95,147,1) 100%, rgba(85,105,165,1) 100%, rgba(89,111,175,1) 100%, rgba(77,90,127,1) 100%, rgba(140,140,140,0.21054359243697474) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#023de9",endColorstr="#8c8c8c",GradientType=1);
+}
+
+.search{
+    display: flex;
+    flex-direction: column;
+}
+
+.search input{
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+.search button {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    background: linear-gradient(to right, #3b3b3b 0%, #3b3b3b 50%, white 50%, white 100%);
+    background-size: 200% 100%;
+    transition: background-position 0.5s ease;
+  }
+  
+  .search button:hover {
+    color: black;
+    background-position: 100% 0;
+    cursor: pointer;
+  }
+
+  .meteoResponse h2{
+    text-align: center;
+}
+
+.meteoResponse{
+      color: white;
+  }
+  
+  
