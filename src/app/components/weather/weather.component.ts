@@ -15,8 +15,7 @@ export class WeatherComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    // Esegui la chiamata all'API di geocodifica all'inizio (puoi spostarlo dove necessario)
-    // per ottenere le coordinate
+   
     this.searchCoordinates();
   }
 
@@ -34,14 +33,12 @@ export class WeatherComponent implements OnInit {
           longitude: parseFloat(data[0].lon),
         };
 
-        // Costruisci l'URL dell'API del meteo
         this.meteoApi = `https://api.open-meteo.com/v1/forecast?latitude=${this.coordinates.latitude}&longitude=${this.coordinates.longitude}&current=temperature_2m,wind_speed_10m`;
 
-        // Esegui la chiamata all'API del meteo solo se hai le coordinate valide
         this.fetchWeatherData();
       } else {
         this.coordinates = null;
-        this.weatherData = null; // Resetta i dati meteorologici in caso di errore
+        this.weatherData = null; 
       }
     });
 
@@ -51,7 +48,7 @@ export class WeatherComponent implements OnInit {
     if (this.meteoApi) {
       this.http.get<any>(this.meteoApi).subscribe(
         data => {
-          this.weatherData = data.current; // Salva i dati meteorologici
+          this.weatherData = data.current; 
         },
         error => {
           console.error('Errore durante la chiamata all\'API del meteo:', error);

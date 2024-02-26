@@ -47,4 +47,13 @@
       color: white;
   }
   
+.immagineNeve{
+    background-image: url(https://www.ilmeteo.it/portale/files/giornale/medium/neve-arrivo-oggi-080124.jpg);
+    background-size: cover;
+}
   
+
+.immagineSole{
+    background-image: url(https://staticfanpage.akamaized.net/wp-content/uploads/2022/05/sole-primo-maggio_0-1200x675.jpeg);
+    background-size: cover;
+}
