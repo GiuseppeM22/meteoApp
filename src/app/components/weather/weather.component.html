@@ -14,5 +14,10 @@
         <p>Probabili Precipitazioni: {{weatherData.precipitation_probability}}% </p>
         <p *ngIf="weatherData.cloud_cover >= 70 && this.weatherData.precipitation_probability <= 50">Condizione: Nuovoloso</p>
   </div>
+
+  <div *ngIf="loading" class="loading-indicator">
+    <div class="spinner"></div>
+  </div>
+  
 </div>
   

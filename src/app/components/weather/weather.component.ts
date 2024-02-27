@@ -13,6 +13,7 @@ export class WeatherComponent implements OnInit {
   weatherData: any = null;
   backgroundImage: string;
   pageTitle: string = '';
+  loading: boolean = false; // Variabile per tenere traccia dello stato di caricamento
 
   constructor(private http: HttpClient) {}
 
@@ -27,13 +28,15 @@ export class WeatherComponent implements OnInit {
       format: 'json',
     };
 
+    this.loading = true;
+
     this.http.get<any[]>(apiUrl, { params }).subscribe(data => {
       if (data.length > 0) {
         this.coordinates = {
           latitude: parseFloat(data[0].lat),
           longitude: parseFloat(data[0].lon),
         };
-        this.meteoApi = `https://api.open-meteo.com/v1/forecast?latitude=${this.coordinates.latitude}&longitude=${this.coordinates.longitude}&current=temperature_2m,relative_humidity_2m,precipitation_probability,cloud_cover,wind_speed_10m`;
+        this.meteoApi = `https://api.open-meteo.com/v1/forecast?latitude=${this.coordinates.latitude}&longitude=${this.coordinates.longitude}&current=is_day,temperature_2m,relative_humidity_2m,precipitation_probability,cloud_cover,wind_speed_10m`;
 
         this.fetchWeatherData();
         this.pageTitle = `Meteo ${this.cityName}`;
@@ -42,30 +45,57 @@ export class WeatherComponent implements OnInit {
         this.weatherData = null;
         this.backgroundImage = ''; 
         this.pageTitle = '';
+        this.loading = false;
       }
     });
   }
 
   fetchWeatherData(): void {
     if (this.meteoApi) {
+
+      this.loading = true;
+
       this.http.get<any>(this.meteoApi).subscribe(
         data => {
           this.weatherData = data.current;
-          // Controllo per impostare la classe per lo sfondo in base alla temperatura
-          if (this.weatherData.temperature_2m <= 0 && this.weatherData.precipitation_probability >= 50) {
-            this.backgroundImage = 'immagineNeve';
-          } else if (this.weatherData.temperature_2m <= 0) {
-            this.backgroundImage = 'immagineFreddo';
-          } else if (this.weatherData.precipitation_probability >= 50) {
-            this.backgroundImage = 'immaginePioggia';
-          } else if (this.weatherData.cloud_cover >= 70) {
-            this.backgroundImage = 'immagineNuvoloso';
-          } else {
-            this.backgroundImage = 'immagineSole';
+
+          if (this.weatherData.is_day !== undefined) {
+            // Controllo per impostare la classe per lo sfondo in base alla temperatura
+            //se notte
+            if(this.weatherData.is_day){
+              console.log(this.weatherData.is_day);
+            }
+            if (this.weatherData.temperature_2m <= 0 && this.weatherData.precipitation_probability >= 50) {
+              this.backgroundImage = 'immagineNeveNotte';
+            } else if ( this.weatherData.temperature_2m <= 0) {
+              this.backgroundImage = 'immagineFreddoNotte';
+            } else if ( this.weatherData.precipitation_probability >= 50) {
+              this.backgroundImage = 'immaginePioggiaNotte';
+            } else if ( this.weatherData.cloud_cover >= 70) {
+              this.backgroundImage = 'immagineNuvolosoNotte';
+            } else {
+              this.backgroundImage = 'immagineSerenoNotte';
+            }
+  
+            //se giorno
+            if (this.weatherData.is_day && this.weatherData.temperature_2m <= 0 && this.weatherData.precipitation_probability >= 50) {
+              this.backgroundImage = 'immagineNeve';
+            } else if (this.weatherData.is_day && this.weatherData.temperature_2m <= 0) {
+              this.backgroundImage = 'immagineFreddo';
+            } else if (this.weatherData.is_day && this.weatherData.precipitation_probability >= 50) {
+              this.backgroundImage = 'immaginePioggia';
+            } else if (this.weatherData.is_day && this.weatherData.cloud_cover >= 70) {
+              this.backgroundImage = 'immagineNuvoloso';
+            } else if(this.weatherData.is_day) {
+              this.backgroundImage = 'immagineSole';
+            }
           }
+
+          this.loading = false;
         },
         error => {
           console.error('Errore durante la chiamata all\'API del meteo:', error);
+          this.loading = false;
         }
       );
     }
