@@ -31,24 +31,35 @@
     background: linear-gradient(to right, #3b3b3b 0%, #3b3b3b 50%, white 50%, white 100%);
     background-size: 200% 100%;
     transition: background-position 0.5s ease;
-  }
-  
-  .search button:hover {
+}
+
+.search button:hover {
     color: black;
     background-position: 100% 0;
     cursor: pointer;
-  }
+}
 
-  .meteoResponse h2{
+h2{
     text-align: center;
+    color: white;
 }
 
 .meteoResponse{
       color: white;
-  }
+      text-shadow: 
+      -1px -1px 0 #000,  
+       1px -1px 0 #000,
+      -1px  1px 0 #000,
+       1px  1px 0 #000;
+}
   
 .immagineNeve{
-    background-image: url(https://www.ilmeteo.it/portale/files/giornale/medium/neve-arrivo-oggi-080124.jpg);
+    background-image: url(https://www.ilmeteo.it/portale/files/giornale/medium/nevenovembre-261023.jpg);
+    background-size: cover;
+}
+
+.immagineFreddo{
+    background-image: url(https://www.firstonline.info/wp-content/uploads/2023/02/Meteo-previsioni-weekend-480x270.jpg);
     background-size: cover;
 }
   
@@ -56,4 +67,15 @@
 .immagineSole{
     background-image: url(https://staticfanpage.akamaized.net/wp-content/uploads/2022/05/sole-primo-maggio_0-1200x675.jpeg);
     background-size: cover;
+}
+
+.immaginePioggia{
+    background-image: url(https://w-content.meteosuper.it/2022/05/pioggia-12.jpg);
+    background-size: cover;
+}
+
+.immagineNuvoloso{
+    background-image: url(https://primadituttomantova.it/media/2019/03/1-10-420x252.jpg);
+    background-size: cover;
+
 }

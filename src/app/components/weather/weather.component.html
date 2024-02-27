@@ -1,4 +1,4 @@
-<div class="container">
+<div [ngClass]="backgroundImage" class="container">
   <div class="search">
     <input (keyup.enter)="searchCoordinates()" type="text" id="cityInput" [(ngModel)]="cityName" placeholder="inserisci città"/>
     <button (click)="searchCoordinates()">Cerca</button>
@@ -7,9 +7,12 @@
   <div>
     <!-- *ngIf="weatherData" -->
     <div *ngIf="weatherData" class="meteoResponse">
-        <h2>Meteo {{cityName | titlecase}}</h2>
+        <h2>{{pageTitle | titlecase}}</h2>
         <p>Temperatura: {{ weatherData.temperature_2m }} °C</p>
+        <p>Umidità: {{weatherData.relative_humidity_2m}}%</p>
         <p>Vento: {{ weatherData.wind_speed_10m }} km/h</p>
+        <p>Probabili Precipitazioni: {{weatherData.precipitation_probability}}% </p>
+        <p *ngIf="weatherData.cloud_cover >= 70 && this.weatherData.precipitation_probability <= 50">Condizione: Nuovoloso</p>
   </div>
 </div>
   
