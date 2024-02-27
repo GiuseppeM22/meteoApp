@@ -62,9 +62,6 @@ export class WeatherComponent implements OnInit {
           if (this.weatherData.is_day !== undefined) {
             // Controllo per impostare la classe per lo sfondo in base alla temperatura
             //se notte
-            if(this.weatherData.is_day){
-              console.log(this.weatherData.is_day);
-            }
             if (this.weatherData.temperature_2m <= 0 && this.weatherData.precipitation_probability >= 50) {
               this.backgroundImage = 'immagineNeveNotte';
             } else if ( this.weatherData.temperature_2m <= 0) {
