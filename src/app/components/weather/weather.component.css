@@ -21,6 +21,10 @@
     flex-direction: column;
 }
 
+.search p{
+    color: red;
+}
+
 .search input{
     margin-bottom: 20px;
     padding: 10px;

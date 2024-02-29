@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './weather.component.html',
   styleUrls: ['./weather.component.css']
 })
-export class WeatherComponent implements OnInit {
+export class WeatherComponent implements OnChanges {
   cityName: string = '';
   coordinates: { latitude: number, longitude: number } | null = null;
   meteoApi: string = '';
@@ -14,13 +14,17 @@ export class WeatherComponent implements OnInit {
   backgroundImage: string;
   pageTitle: string = '';
   loading: boolean = false; // Variabile per tenere traccia dello stato di caricamento
+  notFound: boolean = false
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.searchCoordinates();
   }
-
+  /* 
+    dato che l'api del meteo accetta come valori di ricerca solo latitudine e longitudine
+    in questo metodo andiamo ad utilizzare un'altra api per convertire il nome della citta' in dati di latitudine e longitudine 
+  */
   searchCoordinates(): void {
     const apiUrl = 'https://nominatim.openstreetmap.org/search';
     const params = {
@@ -36,7 +40,9 @@ export class WeatherComponent implements OnInit {
           latitude: parseFloat(data[0].lat),
           longitude: parseFloat(data[0].lon),
         };
-        this.meteoApi = `https://api.open-meteo.com/v1/forecast?latitude=${this.coordinates.latitude}&longitude=${this.coordinates.longitude}&current=is_day,temperature_2m,relative_humidity_2m,precipitation_probability,cloud_cover,wind_speed_10m`;
+        console.log(data);
+        
+        this.meteoApi = `https://api.open-meteo.com/v1/forecast?latitude=${this.coordinates.latitude}&longitude=${this.coordinates.longitude}&current=is_day,temperature_2m,relative_humidity_2m,precipitation_probability,precipitation,cloud_cover,wind_speed_10m`;
 
         this.fetchWeatherData();
         this.pageTitle = `Meteo ${this.cityName}`;
@@ -46,10 +52,12 @@ export class WeatherComponent implements OnInit {
         this.backgroundImage = ''; 
         this.pageTitle = '';
         this.loading = false;
+        this.notFound = true
       }
     });
   }
 
+  /* in questo metodo vado ad effettuare la definitiva chiamata all'api per i servizi metereoogici */
   fetchWeatherData(): void {
     if (this.meteoApi) {
 
@@ -87,8 +95,9 @@ export class WeatherComponent implements OnInit {
               this.backgroundImage = 'immagineSole';
             }
           }
-
           this.loading = false;
+          this.cityName = ''
+          this.notFound = false
         },
         error => {
           console.error('Errore durante la chiamata all\'API del meteo:', error);

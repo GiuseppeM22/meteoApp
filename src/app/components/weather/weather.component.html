@@ -1,5 +1,6 @@
 <div [ngClass]="backgroundImage" class="container">
   <div class="search">
+    <p *ngIf="notFound">Ops! la Città inserita non sembra esistere</p>
     <input (keyup.enter)="searchCoordinates()" type="text" id="cityInput" [(ngModel)]="cityName" placeholder="inserisci città"/>
     <button (click)="searchCoordinates()">Cerca</button>
   </div>
@@ -11,8 +12,10 @@
         <p>Temperatura: {{ weatherData.temperature_2m }} °C</p>
         <p>Umidità: {{weatherData.relative_humidity_2m}}%</p>
         <p>Vento: {{ weatherData.wind_speed_10m }} km/h</p>
-        <p>Probabili Precipitazioni: {{weatherData.precipitation_probability}}% </p>
+        <p>Probabili Precipitazioni: {{weatherData.precipitation_probability}}%</p>
+        <p *ngIf="weatherData.precipitation >= 0 && weatherData.precipitation_probability > 50">{{weatherData.precipitation < 3 ? 'precipitazioni deboli' : weatherData.precipitation < 6 ? 'precipitazioni moderate' : 'precipitazioni forti'}}</p>
         <p *ngIf="weatherData.cloud_cover >= 70 && this.weatherData.precipitation_probability <= 50">Condizione: Nuovoloso</p>
+        <p></p>
   </div>
 
   <div *ngIf="loading" class="loading-indicator">
