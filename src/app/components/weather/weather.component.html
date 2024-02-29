@@ -8,7 +8,7 @@
   <div>
     <!-- *ngIf="weatherData" -->
     <div *ngIf="weatherData" class="meteoResponse">
-        <h2>{{pageTitle | titlecase}}</h2>
+        <h2>{{pageTitle | titlecase}} ({{cityInfo}})</h2>
         <p>Temperatura: {{ weatherData.temperature_2m }} °C</p>
         <p>Umidità: {{weatherData.relative_humidity_2m}}%</p>
         <p>Vento: {{ weatherData.wind_speed_10m }} km/h</p>

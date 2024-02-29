@@ -15,6 +15,7 @@ export class WeatherComponent implements OnChanges {
   pageTitle: string = '';
   loading: boolean = false; // Variabile per tenere traccia dello stato di caricamento
   notFound: boolean = false
+  cityInfo: string;
 
   constructor(private http: HttpClient) {}
 
@@ -40,10 +41,19 @@ export class WeatherComponent implements OnChanges {
           latitude: parseFloat(data[0].lat),
           longitude: parseFloat(data[0].lon),
         };
+        //dal nostro data , ci prendiamo l'informazione della nazione
+        if (data[0].hasOwnProperty('display_name')) {
+          const displayName = data[0].display_name;
+          // Divido la stringa utilizzando la virgola come delimitatore
+          const displayNameParts = displayName.split(',');
+          // Prendo l'ultima parte e rimuovo con il metodo trim() eventuali spazi vuoti
+          const country = displayNameParts[displayNameParts.length - 1].trim();
+          this.cityInfo = country;
+        }
         console.log(data);
         
         this.meteoApi = `https://api.open-meteo.com/v1/forecast?latitude=${this.coordinates.latitude}&longitude=${this.coordinates.longitude}&current=is_day,temperature_2m,relative_humidity_2m,precipitation_probability,precipitation,cloud_cover,wind_speed_10m`;
-
+        
         this.fetchWeatherData();
         this.pageTitle = `Meteo ${this.cityName}`;
       } else {
