@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './weather.component.html',
   styleUrls: ['./weather.component.css']
 })
-export class WeatherComponent implements OnChanges {
+export class WeatherComponent implements OnChanges{
   cityName: string = '';
   coordinates: { latitude: number, longitude: number } | null = null;
   meteoApi: string = '';
@@ -21,6 +21,7 @@ export class WeatherComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.searchCoordinates();
+    
   }
   /* 
     dato che l'api del meteo accetta come valori di ricerca solo latitudine e longitudine
@@ -77,34 +78,35 @@ export class WeatherComponent implements OnChanges {
         data => {
           this.weatherData = data.current;
 
-          if (this.weatherData.is_day !== undefined) {
-            // Controllo per impostare la classe per lo sfondo in base alla temperatura
-            //se notte
-            if (this.weatherData.temperature_2m <= 0 && this.weatherData.precipitation_probability >= 50) {
-              this.backgroundImage = 'immagineNeveNotte';
-            } else if ( this.weatherData.temperature_2m <= 0) {
-              this.backgroundImage = 'immagineFreddoNotte';
-            } else if ( this.weatherData.precipitation_probability >= 50) {
-              this.backgroundImage = 'immaginePioggiaNotte';
-            } else if ( this.weatherData.cloud_cover >= 70) {
-              this.backgroundImage = 'immagineNuvolosoNotte';
-            } else {
-              this.backgroundImage = 'immagineSerenoNotte';
-            }
+          // if (this.weatherData.is_day !== undefined) {
+          //   // Controllo per impostare la classe per lo sfondo in base alla temperatura
+          //   //se notte
+          //   if (this.weatherData.temperature_2m <= 0 && this.weatherData.precipitation_probability >= 50) {
+          //     this.backgroundImage = 'immagineNeveNotte';
+          //   } else if ( this.weatherData.temperature_2m <= 0) {
+          //     this.backgroundImage = 'immagineFreddoNotte';
+          //   } else if ( this.weatherData.precipitation_probability >= 50) {
+          //     this.backgroundImage = 'immaginePioggiaNotte';
+          //   } else if ( this.weatherData.cloud_cover >= 70) {
+          //     this.backgroundImage = 'immagineNuvolosoNotte';
+          //   } else {
+          //     this.backgroundImage = 'immagineSerenoNotte';
+          //   }
   
-            //se giorno
-            if (this.weatherData.is_day && this.weatherData.temperature_2m <= 0 && this.weatherData.precipitation_probability >= 50) {
-              this.backgroundImage = 'immagineNeve';
-            } else if (this.weatherData.is_day && this.weatherData.temperature_2m <= 0) {
-              this.backgroundImage = 'immagineFreddo';
-            } else if (this.weatherData.is_day && this.weatherData.precipitation_probability >= 50) {
-              this.backgroundImage = 'immaginePioggia';
-            } else if (this.weatherData.is_day && this.weatherData.cloud_cover >= 70) {
-              this.backgroundImage = 'immagineNuvoloso';
-            } else if(this.weatherData.is_day) {
-              this.backgroundImage = 'immagineSole';
-            }
-          }
+          //   //se giorno
+          //   if (this.weatherData.is_day && this.weatherData.temperature_2m <= 0 && this.weatherData.precipitation_probability >= 50) {
+          //     this.backgroundImage = 'immagineNeve';
+          //   } else if (this.weatherData.is_day && this.weatherData.temperature_2m <= 0) {
+          //     this.backgroundImage = 'immagineFreddo';
+          //   } else if (this.weatherData.is_day && this.weatherData.precipitation_probability >= 50) {
+          //     this.backgroundImage = 'immaginePioggia';
+          //   } else if (this.weatherData.is_day && this.weatherData.cloud_cover >= 70) {
+          //     this.backgroundImage = 'immagineNuvoloso';
+          //   } else if(this.weatherData.is_day) {
+          //     this.backgroundImage = 'immagineSole';
+          //   }
+          // }
+          
           this.loading = false;
           this.cityName = ''
           this.notFound = false

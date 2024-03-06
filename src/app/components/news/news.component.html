@@ -1,0 +1,18 @@
+<div *ngIf="pages.length > 0">
+    <div *ngFor="let article of pages[currentPageIndex]">
+      <!-- Inserisci qui il codice per visualizzare i contenuti dell'articolo -->
+      <p>{{ article.title }}</p>
+      <p>{{ article.description }}</p>
+      <!-- Aggiungi altri dettagli dell'articolo se necessario -->
+    </div>
+    
+    <div>
+      <button (click)="onPrevPage()" [disabled]="currentPageIndex === 0">Prev</button>
+      <button (click)="onNextPage()" [disabled]="!nextPageId">Next</button>
+    </div>
+  </div>
+  
+  <div *ngIf="pages.length === 0">
+    <p>Caricamento...</p>
+  </div>
+  

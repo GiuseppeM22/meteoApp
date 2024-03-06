@@ -1,5 +1,7 @@
-<div [ngClass]="backgroundImage" class="container">
+<!--note: per immagine completa rimettere classe container al div contenitore -->
+<div [ngClass]="backgroundImage" >
   <div class="search">
+    <h2 *ngIf="weatherData">{{pageTitle | titlecase}} ({{cityInfo}})</h2>
     <p *ngIf="notFound">Ops! la Città inserita non sembra esistere</p>
     <input (keyup.enter)="searchCoordinates()" type="text" id="cityInput" [(ngModel)]="cityName" placeholder="inserisci città"/>
     <button (click)="searchCoordinates()">Cerca</button>
@@ -8,15 +10,31 @@
   <div>
     <!-- *ngIf="weatherData" -->
     <div *ngIf="weatherData" class="meteoResponse">
-        <h2>{{pageTitle | titlecase}} ({{cityInfo}})</h2>
-        <p>Temperatura: {{ weatherData.temperature_2m }} °C</p>
-        <p>Umidità: {{weatherData.relative_humidity_2m}}%</p>
-        <p>Vento: {{ weatherData.wind_speed_10m }} km/h</p>
-        <p>Probabili Precipitazioni: {{weatherData.precipitation_probability}}%</p>
-        <p *ngIf="weatherData.precipitation >= 0 && weatherData.precipitation_probability > 50">{{weatherData.precipitation < 3 ? 'precipitazioni deboli' : weatherData.precipitation < 6 ? 'precipitazioni moderate' : 'precipitazioni forti'}}</p>
-        <p *ngIf="weatherData.cloud_cover >= 70 && this.weatherData.precipitation_probability <= 50">Condizione: Nuovoloso</p>
-        <p></p>
-  </div>
+      <div class="weatherInfoContainer">
+        <p>Temperatura</p>
+        <p class="meteoInfo">{{ weatherData.temperature_2m }} °C</p>
+      </div>
+      <div class="weatherInfoContainer">
+        <p>Umidità</p>
+        <p class="meteoInfo">{{weatherData.relative_humidity_2m}}%</p>
+      </div>
+      <div class="weatherInfoContainer">
+        <p>Vento</p>
+        <p class="meteoInfo">{{ weatherData.wind_speed_10m }} km/h</p>
+      </div>
+      <div *ngIf="weatherData.precipitation_probability >= 50" class="weatherInfoContainer">
+        <p>Probabili Precipitazioni</p>
+        <p class="meteoInfo">{{weatherData.precipitation_probability}}%</p>
+      </div>
+      <div *ngIf="weatherData.precipitation >= 0 && weatherData.precipitation_probability > 50" class="weatherInfoContainer">
+        <p>Precipitazioni</p>
+        <p class="meteoInfo">{{weatherData.precipitation < 3 ? 'deboli' : weatherData.precipitation < 6 ? 'moderate' : 'forti'}}</p>
+      </div>
+      <div *ngIf="weatherData.cloud_cover >= 70 && this.weatherData.precipitation_probability <= 50" class="weatherInfoContainer">
+        <p>Condizione</p>
+        <p class="meteoInfo">Nuovoloso</p>
+      </div>
+    </div>
 
   <div *ngIf="loading" class="loading-indicator">
     <div class="spinner"></div>
