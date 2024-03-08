@@ -2,9 +2,11 @@
     font-family: "Anta", sans-serif;
     font-weight: 400;
     font-style: normal;
+    box-sizing: border-box;
+    padding: 0px;
 }
 
-.container{
+/* .container{
     padding: 50px;
     border-radius: 30px;
     background: rgb(2,61,233);
@@ -14,7 +16,7 @@
     background: -webkit-linear-gradient(180deg, rgba(2,61,233,1) 0%, rgba(67,109,228,1) 100%, rgba(77,95,147,1) 100%, rgba(85,105,165,1) 100%, rgba(89,111,175,1) 100%, rgba(77,90,127,1) 100%, rgba(140,140,140,0.21054359243697474) 100%);
     background: linear-gradient(180deg, rgba(2,61,233,1) 0%, rgba(67,109,228,1) 100%, rgba(77,95,147,1) 100%, rgba(85,105,165,1) 100%, rgba(89,111,175,1) 100%, rgba(77,90,127,1) 100%, rgba(140,140,140,0.21054359243697474) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#023de9",endColorstr="#8c8c8c",GradientType=1);
-}
+} */
 
 .search{
     display: flex;

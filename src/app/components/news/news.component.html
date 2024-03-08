@@ -1,18 +1,23 @@
-<div *ngIf="pages.length > 0">
-    <div *ngFor="let article of pages[currentPageIndex]">
-      <!-- Inserisci qui il codice per visualizzare i contenuti dell'articolo -->
-      <p>{{ article.title }}</p>
-      <p>{{ article.description }}</p>
-      <!-- Aggiungi altri dettagli dell'articolo se necessario -->
+<div class="newsContainer" *ngIf="!loading && pages && pages[currentPageIndex]">
+  <div class="articleContainer" *ngFor="let article of pages[currentPageIndex]">
+    <div class="newsImage">
+      <img :src="{{article.image_url}}" alt="">
     </div>
-    
-    <div>
-      <button (click)="onPrevPage()" [disabled]="currentPageIndex === 0">Prev</button>
-      <button (click)="onNextPage()" [disabled]="!nextPageId">Next</button>
+    <div class="newsInfo">
+      <span>{{article.category}}</span>
+      <a href="{{article.link}}"><p>{{ article.title }}</p></a>
+      <p>
+        {{ article.description.length > 230 ? article.description.substring(0, 230) + '...' : article.description }}
+      </p>
     </div>
   </div>
   
-  <div *ngIf="pages.length === 0">
-    <p>Caricamento...</p>
+  <div class="nextPrevButtonContainer">
+    <button (click)="onPrevPage()" [disabled]="currentPageIndex === 0">Precedente</button>
+    <button (click)="onNextPage()" [disabled]="!nextPageId">Successiva</button>
   </div>
-  
+</div>
+
+<div class="loading-indicator" *ngIf="loading || !pages || !pages[currentPageIndex]">
+  <div class="spinner"></div>
+</div>

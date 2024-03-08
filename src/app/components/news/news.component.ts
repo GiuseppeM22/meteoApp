@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-news',
@@ -8,13 +10,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class NewsComponent implements OnInit {
   currentPageIndex: number = 0;
-  pages: any[] = [[]]; // Inizializzazione con una pagina vuota
+  pages: any[] | undefined;
   nextPageId: string | undefined;
+  loading: boolean = true;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    console.log('Inizializzazione del componente...');
     this.getLatestNews();
   }
 
@@ -27,12 +29,26 @@ export class NewsComponent implements OnInit {
     }
 
     this.http.get(url)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          // Gestisci l'errore qui, ad esempio stampalo a console
+          console.error('Errore durante la chiamata HTTP:', error);
+          // Ritorna un observable vuoto o un observable con un valore di default
+          this.loading = false;
+          return throwError('Si è verificato un errore durante la chiamata HTTP.');
+        })
+      )
       .subscribe((response: any) => {
         console.log('Risposta ricevuta:', response);
         if (response.results.length > 0) {
-          this.pages.push(response.results); // Push the current page to pages array
-          this.nextPageId = response.nextPage; // Set nextPageId for the next request
+          if (!this.pages) {
+            this.pages = []; // Inizializza l'array solo se non è già stato inizializzato
+          }
+          this.pages[this.currentPageIndex] = response.results; // Assegna i dati alla pagina corrente
+          this.nextPageId = response.nextPage;
         }
+        this.loading = false;
+        this.cdr.detectChanges();
       });
   }
 
@@ -46,6 +62,7 @@ export class NewsComponent implements OnInit {
   onPrevPage() {
     if (this.currentPageIndex > 0) {
       this.currentPageIndex--;
+      this.getLatestNews(this.nextPageId);
     }
   }
 }
